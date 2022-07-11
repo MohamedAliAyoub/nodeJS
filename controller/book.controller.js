@@ -3,6 +3,8 @@ var dbConnection = require('../db/connection');
 var util = require('../Util/utility');
 var auditService = require('../audit/audit.service');
 var auditAction = require('../audit/auditAction');
+var errorStatus = require('../error/error.status');
+var errorType = require('../error/error.type');
 var Logger = require('../services/logger.service');
 
 const logger = new Logger('book.controller');
@@ -26,25 +28,24 @@ exports.getBooksList = async(req , res) => {
 exports.getBookDetails = async (req , res) => {
     try {
          var bookId = req.params.bookId;
+         console.log("bookId : " + bookId);
          if (isNaN(bookId))
             throw new APIError(errorType.API_ERROR , 
             errorStatus.INTERNAL_SERVER_ERROR ,
              "Invalid bookId , is not a number , bookId value is : " + bookId , 
              true);
-         console.log("bookId : " + bookId);
         
         var bookDetailsQuery = queries.queryList.GET_BOOK_DETAILS_QUERY;
         var result = await dbConnection.dbQuery(bookDetailsQuery , [bookId]);
         return res.status(200).send(JSON.stringify(result.rows[0]));
-    } catch (err)
-    {
-        console.log("Error : " + err.description);
+    } catch (err) {
+        console.log("Error : " + err.name);
         if(err.name === errorType.SQL_INJECTION_ERROR)
             // handlerError();
         logger.error("Failed to get Book details " , JSON.stringify(err));
         return res.status(500).send({error : 'Failed to get book details'});
-    }  
-} ;
+    }   
+ }
 
     exports.updateBook = async (req , res) => {
 
