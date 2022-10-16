@@ -27,6 +27,7 @@ exports.saveStore = async (req , res) => {
         }
         
         var storeCode = util.generateStoreCode();
+        console.log(storeCode ,'test');
         values = [storeName , storeCode ,   createdOn , createdBy , address ]
         var saveStoreQuery= quiries.queryList.SAVE_STORE_QUERY;
         var result =  await dbConnection.dbQuery(saveStoreQuery ,values );

@@ -8,7 +8,7 @@ var errorType = require('../error/error.type');
 var Logger = require('../services/logger.service');
 
 const logger = new Logger('book.controller');
-exports.getBooksList = async(req , res) => {
+exports.getBookList = async(req , res) => {
     var auditOn = util.dateFormat();
     try{
         var bookQuery= queries.queryList.GET_BOOK_LIST_QUERY;
@@ -16,6 +16,9 @@ exports.getBooksList = async(req , res) => {
         var result =  await dbConnection.dbQuery(bookQuery );
         logger.info("return Book List" , result.rows);
         auditService.prepareAudit(auditAction.actionList.GET_BOOK_LIST , result.rows  , null , "postman" , auditOn);
+      
+        
+
         return res.status(200).send(JSON.stringify(result.rows))
     }catch(err){
         console.log("Error : " + err);

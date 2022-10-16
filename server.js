@@ -4,7 +4,9 @@ var cors = require('cors')
 var bodyParser = require('body-parser')
 var noteRouter = require('./route/noteRouter')
 var storeRouter = require('./route/store.route')
+var loginRouter = require('./route/login.route')
 var bookRoute = require('./route/book.route');
+var userRoute = require('./route/user.route');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
@@ -29,6 +31,8 @@ app.get('/', function (req, res) {
 app.use("/api/v1" , noteRouter);
 app.use("/api/v1" , storeRouter);
 app.use("/api/v1" , bookRoute);
+app.use("/api/v1" , userRoute);
+app.use("/api/v1" , loginRouter);
 
 app.listen(3000 , ()=>{
     console.log('Server start ...... ');
