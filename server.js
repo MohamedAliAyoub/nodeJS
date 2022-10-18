@@ -7,6 +7,7 @@ var storeRouter = require('./route/store.route')
 var loginRouter = require('./route/login.route')
 var bookRoute = require('./route/book.route');
 var userRoute = require('./route/user.route');
+var uploadRoute = require('./route/upload.route');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
@@ -33,6 +34,7 @@ app.use("/api/v1" , storeRouter);
 app.use("/api/v1" , bookRoute);
 app.use("/api/v1" , userRoute);
 app.use("/api/v1" , loginRouter);
+app.use("/api/v1" , uploadRoute);
 
 app.listen(3000 , ()=>{
     console.log('Server start ...... ');
