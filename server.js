@@ -3,6 +3,7 @@ var express = require('express')
 var cors = require('cors')
 var bodyParser = require('body-parser')
 var noteRouter = require('./route/noteRouter')
+var paypalRoute = require('./route/paypal.route');
 var storeRouter = require('./route/store.route')
 var loginRouter = require('./route/login.route')
 var bookRoute = require('./route/book.route');
@@ -34,6 +35,20 @@ app.get("/" , function(req , res) {
   // res.send("Server started ........");
   res.sendFile(__dirname + '/index.html')
 });
+app.get("/payment" , function(req , res) {
+  // res.send("Server started ........");
+  res.sendFile(__dirname + '/payment.html')
+});
+
+// success page 
+app.get('/success' , (req ,res ) => { 
+  res.sendFile(__dirname + '/success.html')
+});
+// error page 
+app.get('/err' , (req , res) => {
+  res.sendFile(__dirname + '/error.html')
+});
+
 app.use("/api/v1" , noteRouter);
 app.use("/api/v1" , storeRouter);
 app.use("/api/v1" , bookRoute);
@@ -41,10 +56,12 @@ app.use("/api/v1" , userRoute);
 app.use("/api/v1" , loginRouter);
 app.use("/api/v1" , uploadRoute);
 app.use("/api/v1" , exportRoute);
+app.use("/api/v1" , paypalRoute);
 
 const server = app.listen(3000 , ()=>{
     console.log('Server start ...... ');
 } );
+
 
 
 // initialize & listen to server
